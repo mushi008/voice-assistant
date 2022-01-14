@@ -1,0 +1,139 @@
+import datetime
+import webbrowser
+from typing import Callable, Union, Any, List
+import pyjokes
+import pyttsx3
+import pywhatkit
+import speech_recognition as sr
+import wikipedia
+
+listener = sr.Recognizer()
+Engine = pyttsx3.init()
+
+
+def talk(text: object) -> object:
+    """
+
+    :rtype: object
+    """
+    Engine.say(text)
+    Engine.runAndWait()
+
+
+def take_command() -> object:
+    """
+    """
+    try:
+        with sr.Microphone() as source:
+            print('listening...')
+            voice = listener.listen(source)
+            command = listener.recognize_google(voice)
+            command = command.lower()
+            if 'balwant' in command:
+                command = command.replace('balwant', '')
+                print(command)
+    except:
+        pass
+    assert isinstance(command, object)
+    return command
+
+
+def run_alexa() -> object:
+    """
+
+    :rtype: object
+    """
+    command: Callable[[], Union[List[Any], Any]] = take_command()
+    print(command)
+    if 'play' in command:
+        # noinspection PyUnresolvedReferences
+        song = command.replace('play', '')
+        talk('playing ' + song)
+        print('playing')
+        pywhatkit.playonyt(song)
+    if 'search' in command:
+        browse: object = command.replace('search', '')
+        talk('searching' + browse)
+        print('searching')
+        pywhatkit.info(browse)
+        talk(pywhatkit.info(browse))
+    elif 'time' in command:
+        time = datetime.datetime.now().strftime('%I%M %p')
+        print(time)
+        talk('the current time is' + time)
+    elif 'who is' in command:
+        # noinspection PyUnresolvedReferences
+        person = command.replace('who is', '')
+        info = wikipedia.summary(person, 1)
+        print(info)
+        talk(info)
+    elif 'date' in command:
+        talk('Sure')
+    elif 'are you single' in command:
+        talk('yes')
+    elif 'joke' in command:
+        talk(pyjokes.get_joke())
+        print(pyjokes.get_joke())
+    elif 'can you get me water' in command:
+        talk('main tumhare bap ka naukar nahi hoon!!!')
+    elif 'what are you' in command:
+        talk('i am a personalized voice assistant customized as per my masters needs')
+
+    elif 'who owns you' in command:
+        talk(
+            'Shaurya Malhotra the great made me he is one of the best programmers, sportsman and one of the kindest people in the world')
+    elif 'how are you' in command:
+        talk('im good thanks')
+    elif 'are you a idiot' in command:
+        talk('i am not but you are')
+    elif 'what is your name' in command:
+        talk('Balwant Singh at your service')
+    elif 'open google' in command:
+        talk('opening google')
+        webbrowser.open('http://google.com')
+    elif 'open youtube' in command:
+        talk('opening youtube')
+        webbrowser.open('http://youtube.com')
+    elif 'open discord' in command:
+        talk('opening discord')
+        webbrowser.open('http://discord.com/app')
+    elif 'hey man' in command:
+        talk('whatsup')
+    elif 'is shaurya stupid' in command:
+        talk('no he is one of the greatest')
+    elif 'jay shri ram' in command:
+        talk('jai   shree   ram')
+    elif 'open gmail' in command:
+        talk('Opening gmail')
+        webbrowser.open('http://gmail.com')
+    elif 'open class' in command:
+        talk('opening classroom')
+        webbrowser.open('http://classroom.google.com')
+    elif 'open my syllabus' in command:
+        talk('opening your exam syllabus sir')
+        webbrowser.open('http://classroom.google.com/u/0/c/MzEwMTE0MTE0OTM0/p/Mzg0MjkxMzk1NTk4/details')
+    elif 'open the movie theatre' in command:
+        talk('opening hotstar')
+        webbrowser.open('http://hotstar.com')
+    elif 'open shopping centre' in command:
+        talk('opening amazon')
+        webbrowser.open('http://www.amazon.in/')
+    elif 'what is my mother doing' in command:
+        talk('She is helping you study sir')
+    elif 'what are you doing' in command:
+        talk('eating radiation')
+    elif 'what is' in command:
+        talk('i am not your servant idiot, do it your self')
+    elif 'thank you' in command:
+        talk('you are welcome, is there anything else i can do for you?')
+    elif 'sleep' in command:
+        talk('ok sir, goodbye')
+        quit()
+
+    else:
+        talk('i do not understand, please repeat')
+
+   
+while True:
+    run_alexa()
+//I Hope You liked My Project
